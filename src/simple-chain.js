@@ -5,26 +5,55 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 const chainMaker = {
+  link: [],
+  
   getLength() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.link.length;
   },
-  addLink(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+  addLink(arg) {
+    if ((!!arg) && (typeof arg !== 'object')) {
+      this.link.push(`( ${arg} )`);
+    } else if (typeof arg === 'string') {
+      this.link.push(`( ${arg} )`);
+    } else if (arg === 0) {
+      this.link.push(`( 0 )`);
+    } else if (arg === null) {
+      this.link.push(`( null )`);
+    } else if ((typeof arg === 'number') && isNaN(arg)) {
+      this.link.push(`( NaN )`);
+    } else if (typeof arg === 'object') {
+      this.link.push(`( ${arg} )`);
+    } else if (arg === true) {
+      this.link.push(`( true )`)
+    } else if (arg === false) {
+      this.link.push(`( false )`)
+    } else if (arguments.length = 0) {
+      this.link.push(`(  )`)
+    }
+    return this;
   },
-  removeLink(/* position */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+  removeLink(position) {
+    if ((!!position) && (!isNaN(position)) && (typeof position === 'number') && (position > 0) && ((position % 1) === 0) && (this.link.length > 0) && (position - 1 < this.link.length)) {
+      this.link.splice(position - 1, 1);
+      return this;
+    } else {
+      this.link = [];
+      throw new Error('You can\'t remove incorrect link!');
+    }
   },
+
   reverseChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    this.link.reverse();
+    return this;
   },
+
   finishChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+    result = this.link.join('~~');
+    this.link = [];
+    return result;
+  },
 };
 
 module.exports = {
