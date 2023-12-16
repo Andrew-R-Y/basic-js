@@ -36,6 +36,10 @@ function repeater(str, options) {
     additionRepeated = String(options.addition);
   }
 
+  if (!options.additionRepeatTimes && options.addition) {
+    additionRepeated = String(options.addition);
+  }
+
   if (additionRepeated) {
     result = result + additionRepeated;
   }
@@ -51,10 +55,6 @@ function repeater(str, options) {
     result += separator;
     resultRepeated = result.repeat(repeatTimes);
     result = resultRepeated.slice(0, -separator.length);
-  }
-  if (String(str) === 'STRING_OR_DEFAULT' && typeof options === 'object') {
-    result =
-      'STRING_OR_DEFAULTSTRING_OR_DEFAULT+STRING_OR_DEFAULTSTRING_OR_DEFAULT';
   }
 
   return result;
