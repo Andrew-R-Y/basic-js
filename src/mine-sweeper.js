@@ -23,11 +23,72 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper(matrix) {
+  const subResult = [];
+  for (let i = 0; i < matrix.length; i += 1) {
+    const arrLine = [];
+    matrix[i].forEach((item, index) => {
+      if (item === true) {
+        arrLine.push(item);
+      } else {
+        let mines = 0;
+        if (i !== 0) {
+          if (index !== 0) {
+            if (matrix[i - 1][index - 1]) {
+              mines += 1;
+            }
+          }
+          if (matrix[i - 1][index]) {
+            mines += 1;
+          }
+          if (matrix[i - 1][index + 1]) {
+            mines += 1;
+          }
+        }
+        if (index !== 0) {
+          if (matrix[i][index - 1]) {
+            mines += 1;
+          }
+        }
+        if (matrix[i][index + 1]) {
+          mines += 1;
+        }
+        if (i !== matrix.length - 1) {
+          if (index !== 0) {
+            if (matrix[i + 1][index - 1]) {
+              mines += 1;
+            }
+          }
+          if (matrix[i + 1][index]) {
+            mines += 1;
+          }
+          if (matrix[i + 1][index + 1]) {
+            mines += 1;
+          }
+        }
+
+        arrLine.push(mines);
+      }
+    });
+    subResult.push(arrLine);
+  }
+
+  const result = [];
+  for (let i = 0; i < subResult.length; i += 1) {
+    const arrLine = [];
+    subResult[i].forEach((item) => {
+      if (item === true) {
+        arrLine.push(1);
+      } else {
+        arrLine.push(item);
+      }
+    });
+    result.push(arrLine);
+  }
+
+  return result;
 }
 
 module.exports = {
-  minesweeper
+  minesweeper,
 };
